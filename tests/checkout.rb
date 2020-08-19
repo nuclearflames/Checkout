@@ -28,6 +28,7 @@ describe Checkout do
     item = Item.new("001", "Lavender heart", "925")
 
     expect(checkout.scan(item)).to eq({:code => "001", :name => "Lavender heart", :price => "925"})
+    expect(checkout.items.size).to eq(1)
   end
 
 end
