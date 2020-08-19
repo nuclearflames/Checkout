@@ -2,7 +2,6 @@ class PromoCode
 
   VALIDPROMOCODES = ["Buy2OrMore"]
 
-
   attr_reader :rulename, :product_code, :errors
 
   def initialize(rulename = nil, product_code = nil)
