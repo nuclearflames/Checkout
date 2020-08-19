@@ -1,6 +1,5 @@
 require './classes/promo_code.rb'
 
-
 describe PromoCode do
 
   it "creates object" do
