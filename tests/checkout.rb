@@ -45,7 +45,7 @@ describe Checkout do
     checkout = Checkout.new
     checkout.scan(item)
 
-    expect(checkout.total).to  eq("£9.25")
+    expect(checkout.total).to eq("£9.25")
 
   end
 
@@ -62,7 +62,7 @@ describe Checkout do
   end
 
   it "calculates the applied promotion of 1 item" do
-    promo_list = [[ "Invalid", "ProdCodeLH" ]]
+    promo_list = [[ "Buy2OrMore", "001" ]]
 
     item = Item.new("001", "Lavender heart", "925")
     item2 = Item.new("001", "Lavender heart", "925")
