@@ -31,4 +31,52 @@ describe Checkout do
     expect(checkout.items.size).to eq(1)
   end
 
+  it "strip items of symbols" do
+    checkout = Checkout.new
+    item = Item.new("001", "Lavender heart", "£9.25")
+
+    expect(checkout.scan(item)).to eq({:code => "001", :name => "Lavender heart", :price => "925"})
+    expect(checkout.items.size).to eq(1)
+  end
+
+  it "calculates the total of 1 item" do
+    item = Item.new("001", "Lavender heart", "925")
+
+    checkout = Checkout.new
+    checkout.scan(item)
+
+    expect(checkout.total).to  eq("£9.25")
+
+  end
+
+  it "calculates the total of 2 different items" do
+    item = Item.new("001", "Lavender heart", "925")
+    item2 = Item.new("003", "Kids T-shirt", "1995")
+
+    checkout = Checkout.new
+    checkout.scan(item)
+    checkout.scan(item2)
+
+    expect(checkout.total).to eq("£29.20")
+
+  end
+
+  it "calculates the applied promotion of 1 item" do
+    promo_list = [[ "Invalid", "ProdCodeLH" ]]
+
+    item = Item.new("001", "Lavender heart", "925")
+    item2 = Item.new("001", "Lavender heart", "925")
+    item3 = Item.new("001", "Lavender heart", "925")
+    item4 = Item.new("001", "Lavender heart", "925")
+
+    checkout = Checkout.new(promo_list)
+    checkout.scan(item)
+    checkout.scan(item2)
+    checkout.scan(item3)
+    checkout.scan(item4)
+
+    expect(checkout.total).to eq("£34.00")
+
+  end
+
 end

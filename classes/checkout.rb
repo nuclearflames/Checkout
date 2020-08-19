@@ -17,11 +17,22 @@ class Checkout
 
 
   def scan(item)
+    item.price.gsub!(/[^0-9A-Za-z]/, '')
+
     @items.push(item)
 
     return({:code => item.code, :name => item.name, :price => item.price})
   end
 
+  def total
+    return currency_to_number(@items.map{|x|x.price.to_i}.inject(0, :+))
+  end
+
   private
+
+    # FYI this would normally be in a separate method (but we are only using it in the one class so no potential future duplication)
+    def currency_to_number(number)
+      "£" + number.to_s.insert(-3, ".")
+    end
 
 end
