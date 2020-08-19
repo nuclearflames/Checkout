@@ -1,5 +1,6 @@
 require './classes/checkout.rb'
 require './classes/promo_code.rb'
+require './classes/item.rb'
 
 
 describe Checkout do
@@ -20,6 +21,14 @@ describe Checkout do
     new_checkout = Checkout.new(promo_list)
 
     expect(new_checkout.promo_codes.first.errors).to eq(["Invalid configuration added"])
+  end
+
+  it "accepts a scanned item" do 
+    checkout = Checkout.new
+    item = Item.new("001", "Lavender heart", "925")
+
+    expect(checkout.scan(item)).to eq({:code => "001", :name => "Lavender heart", :price => "925"})
+    expect(checkout.items.size).to eq(1)
   end
 
 end
