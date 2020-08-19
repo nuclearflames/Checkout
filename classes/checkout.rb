@@ -25,7 +25,13 @@ class Checkout
   end
 
   def total
-    return currency_to_number(manipulate_price)
+    manipulate_prices
+
+    final_price = @items.map do |x|
+      x.promo_price.to_i
+    end.inject(0, :+)
+
+    return currency_to_number(final_price)
   end
 
   private
@@ -35,9 +41,7 @@ class Checkout
       "£" + number.to_s.insert(-3, ".")
     end
 
-    def manipulate_price
-
-      final_price = 0
+    def manipulate_prices
 
       @promo_codes.each do |promo_code|
         case promo_code.rulename
@@ -45,14 +49,14 @@ class Checkout
           lavender_heart_products = @items.select{|x| x.name == "Lavender heart" && x.code == promo_code.product_code }
 
           if lavender_heart_products.size > 1
-            final_price += lavender_heart_products.map do |x|
-              x.price.to_i - 75
-            end.inject(0, :+)
+            lavender_heart_products.each do |x|
+              x.promo_price = x.promo_price.to_i - 75
+            end
           end 
         end
       end
 
-      return final_price
+      return true
 
     end
 
