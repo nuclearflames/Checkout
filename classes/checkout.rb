@@ -10,11 +10,12 @@ class Checkout
 
     return if promo_codes_list.nil?
 
+    promo_codes_list.sort_by! {|x|x.size}.reverse!
+
     promo_codes_list.each do |pc|
       @promo_codes.push(PromoCode.new(pc[0], pc[1]))
     end
   end
-
 
   def scan(item)
     item.price.gsub!(/[^0-9A-Za-z]/, '')
@@ -28,8 +29,8 @@ class Checkout
     manipulate_prices
 
     final_price = @items.map do |x|
-      x.promo_price.to_i
-    end.inject(0, :+)
+      x.promo_price.to_f
+    end.inject(0, :+).round
 
     return currency_to_number(final_price)
   end
@@ -50,9 +51,15 @@ class Checkout
 
           if lavender_heart_products.size > 1
             lavender_heart_products.each do |x|
-              x.promo_price = x.promo_price.to_i - 75
+              x.promo_price = x.promo_price.to_f - 75
             end
-          end 
+          end
+        when "10percentoff"
+          if @items.map { |x| x.promo_price.to_f }.inject(0, :+) >= 6000
+            @items.each do |x|
+              x.promo_price = x.promo_price.to_f * 0.9
+            end
+          end
         end
       end
 

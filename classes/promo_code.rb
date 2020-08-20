@@ -1,6 +1,6 @@
 class PromoCode
 
-  VALIDPROMOCODES = ["Buy2OrMore"]
+  VALIDPROMOCODES = ["Buy2OrMore", "10percentoff"]
 
   attr_reader :rulename, :product_code, :errors
 
