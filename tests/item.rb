@@ -8,7 +8,7 @@ describe Item do
   end
 
   it "Creates an item" do
-    expect(Item.new("001", "Lavender heart", "925")).to have_attributes( code: "001", name: "Lavender heart", price: "925" )
+    expect(Item.new("001", "Lavender heart", "925")).to have_attributes( code: "001", name: "Lavender heart", price: "925", promo_price: "925" )
   end
 
 end
