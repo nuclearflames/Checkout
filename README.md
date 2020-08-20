@@ -16,4 +16,5 @@ Our check-out can scan items in any order, and because our promotions will chang
 **ADDING PROMO CODES**
 
 Promo codes allowed in promo_codes.rb
+
 Checkout promo code price checking and application is made in checkout.rb:manipulate_prices. You can add local and global rules to manipulate the basket price in there.
